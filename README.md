@@ -40,8 +40,7 @@ sixers_lineup_project/
    This produces `data/sixers_lineups_2018_19_raw.csv` and
    `data/sixers_team_overall_2018_19.csv`.
 
-3. Update `RAW_FILE` and `TEAM_FILE` paths in `02_analysis.py` to point at
-   the files from step 2 (instead of the `_DEMO` files), then run:
+3. Run the analysis (it reads the files from step 2 by default):
    ```
    python 02_analysis.py
    ```
@@ -102,12 +101,22 @@ the usage ranking are highlighted as potential under-utilized combinations.
 
 ## Key findings
 
-*(Fill in after running on full season data)*
+Results from the full 2018-19 regular season (518 five-man lineups, 3,957
+lineup-minutes; team net rating +2.6). Rankings below use lineups with 40+
+minutes (13 lineups).
 
-- Top lineup by adjusted net rating: ___
-- Most-used lineup: ___
-- Highest-impact players per simplified RAPM: ___
-- Notable gap(s) between usage and efficiency: ___
+- **Top lineup by adjusted net rating:** Redick - Harris - Butler - Embiid -
+  Simmons (161 min, +19.4 raw, +13.0 adjusted).
+- **Most-used lineup:** Redick - Chandler - Butler - Embiid - Simmons (293 min,
+  +12.6 raw, +10.1 adjusted), which also ranks second by adjusted net rating.
+- **Highest-impact players per simplified RAPM (Ridge, cross-validated alpha =
+  1000):** Embiid (+4.1), Butler (+2.8), Redick (+2.2).
+- **Usage vs. efficiency gaps:** three lineups sit in the top five by adjusted
+  net rating but not in the top five by minutes, all with Muscala or Shamet
+  alongside Butler/Simmons: Redick - Butler - Muscala - Embiid - Simmons
+  (61 min, +8.9), Chandler - Butler - Muscala - Simmons - Shamet (68 min, +8.7),
+  and Redick - Muscala - Embiid - McConnell - Korkmaz (63 min, +8.4). These are
+  small samples, so they are leads for film review, not conclusions.
 
 ## Limitations
 
@@ -124,8 +133,9 @@ the usage ranking are highlighted as potential under-utilized combinations.
   lineups simply didn't have time to accumulate large samples - shrinkage
   helps, but doesn't fully solve this.
 - **RAPM simplification:** the Ridge regression here doesn't separate
-  offense/defense, doesn't use possession-level (stint) data, and uses a
-  single regularization parameter rather than cross-validated tuning.
+  offense/defense and doesn't use possession-level (stint) data. The penalty
+  is chosen by 5-fold, minutes-weighted cross-validation, but the estimates are
+  still built from lineup totals, so treat them as directional.
 
 ## Possible extensions
 
